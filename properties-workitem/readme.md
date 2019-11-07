@@ -1,14 +1,7 @@
-# Installation
-1. Git clone this repo
-2. Run `mvn clean install`
-3. Upload `target/properties-loader-<version>` to Business Central artifact repo
-4. Configure your PAM project settings:
-	* Dependencies > add `org.jbpm.process.workitem:properties-loader:<version>`  
-
 ## PropertiesWorkItemHandler
 A work item that reads a java properties file from disk.
 ### Install
-1. Add work item handler: `org.jbpm.process.workitem.properties.PropertiesWorkItemHandler` (Resolver: Reflection, NOT MVEL), add parameter `String directory` to point to directory where properties files are stored.  
+1. Add work item handler: `org.jbpm.process.workitem.properties.PropertiesWorkItemHandler("directory")` (Resolver: Reflection, NOT MVEL), Replace `directory` to point to directory where properties files are stored.  
 ![picture](images/Deployments.png)
 
 ### How to use
