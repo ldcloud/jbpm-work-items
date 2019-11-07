@@ -22,10 +22,10 @@ import org.slf4j.LoggerFactory;
 
 @Wid(widfile = "PropertiesDefinitions.wid", name = "Properties",
         displayName = "Properties",
-        defaultHandler = "mvel: new org.jbpm.process.workitem.properties.PropertiesWorkItemHandler()",
+        defaultHandler = "mvel: new org.jbpm.process.workitem.properties.PropertiesWorkItemHandler(\"directory\")",
         documentation = "${artifactId}/index.html",
-        category = "Properties",
-        icon = "defaultlogicon.gif",
+        category = "${artifactId}",
+        icon = "Properties.png",
         parameters = {
                 @WidParameter(name = "fileName", runtimeType = "java.lang.String"),
         },
@@ -43,17 +43,17 @@ import org.slf4j.LoggerFactory;
         ))
 public class PropertiesWorkItemHandler extends AbstractLogOrThrowWorkItemHandler {
 
-    String directory;
+    private String directory;
     private static final Logger logger = LoggerFactory.getLogger(PropertiesWorkItemHandler.class);
 
     /**
      * defaults properties directory to /tmp/
      */
-    public PropertiesWorkItemHandler() {
-        setLogThrownException(true);
-        //set default properties directory
-        this.directory = "/tmp/";
-    }
+  //  public PropertiesWorkItemHandler() {
+  //      setLogThrownException(true);
+   //     //set default properties directory
+    //    this.directory = "/tmp/";
+    //}
 
     /**
      * 
@@ -64,7 +64,7 @@ public class PropertiesWorkItemHandler extends AbstractLogOrThrowWorkItemHandler
 
         //add file separator to end of directory name
         String lastChar = directory.substring(directory.length() - 1);
-        if (lastChar ==  File.separator) {
+        if (lastChar.equals(File.separator)) {
             this.directory = directory;
         } else {
             this.directory = directory + File.separator;
@@ -83,7 +83,7 @@ public class PropertiesWorkItemHandler extends AbstractLogOrThrowWorkItemHandler
             prop.load(input);
 
             Map<String, Object> results = new HashMap<>();
-            results.put("properties", (Map)prop);
+            results.put("properties", prop);
             workItemManager.completeWorkItem(workItem.getId(), results);
         } catch (Exception ex) {
             handleException(ex);
